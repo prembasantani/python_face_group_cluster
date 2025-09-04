@@ -80,7 +80,6 @@ for cluster_id in set(labels):
     for idx, img_index in enumerate(cluster_indices):
         try:
             src_path = image_paths[img_index]
-
             # if (src_path in copied_images):
             #     continue
 
