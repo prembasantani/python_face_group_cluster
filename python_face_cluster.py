@@ -1,8 +1,3 @@
-# pip install pillow
-# pip install ImageHash
-# pip install face-recognition
-# dlib
-
 import os
 import shutil
 from PIL import Image
@@ -12,16 +7,11 @@ from sklearn.cluster import DBSCAN
 import numpy as np
 from tqdm import tqdm
 import json
+import sys
 
 # --- CONFIG ---
 INPUT_DIR = "images"    # Folder with all input images
 OUTPUT_DIR = "clusters"       # Folder where clusters will be saved
-
-if os.path.exists(OUTPUT_DIR) and os.path.isdir(OUTPUT_DIR):
-    shutil.rmtree(OUTPUT_DIR)
-    print(f"Deleted folder: {OUTPUT_DIR}")
-else:
-    print(f"Folder does not exist: {OUTPUT_DIR}")
 
 # --- STEP 1: Extract face embeddings ---
 embeddings = []
@@ -30,6 +20,12 @@ encoding_with_image_paths = []
 pil_img = ''
 
 def get_file(dir_name):
+    if not os.path.isdir(dir_name) or not os.path.exists(dir_name):
+        print(f"Directory with name ['{dir_name}'] does not exist in the root directory.")
+        return False
+
+    print("Extracting face embeddings...")
+
     for file in tqdm(os.listdir(dir_name)) :
         path = os.path.join(dir_name, file)
         if not os.path.isfile(path):
@@ -48,10 +44,18 @@ def get_file(dir_name):
         except Exception as e:
             print(f"Skipping {path}: {e}")
 
+    return True
 
+success = get_file(INPUT_DIR)
 
-print("Extracting face embeddings...")
-get_file(INPUT_DIR);
+if (success == False):
+    sys.exit()
+
+if os.path.exists(OUTPUT_DIR) and os.path.isdir(OUTPUT_DIR):
+    shutil.rmtree(OUTPUT_DIR)
+    print(f"Deleted folder: {OUTPUT_DIR}")
+else:
+    print(f"Folder does not exist: {OUTPUT_DIR}")
 
 embeddings = np.array(embeddings)
 print(f"Total images with faces: {len(image_paths)}")
