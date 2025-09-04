@@ -31,3 +31,7 @@ There are several commands to run this python page.
 <!-- One final thing before running your program now. Image folder with name 'Images' should be created inside the main root directory with images inside to find faces and re group in cluster folder in root directory -->
 
 <!-- Your program is now ready to run -->
+
+Finally run the command for program with:
+
+# python python_face_cluster.py
