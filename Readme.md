@@ -4,10 +4,6 @@ There are several commands to run this python page.
 
 # Firstly Install python 3.8.0 from python.org
 
-<!-- Fetch the git repository in your directory -->
-
-# git clone https://github.com/prembasantani/python_face_group_cluster.git
-
 <!-- Create Virtual Environment -->
 
 # cd python_face_group_cluster
