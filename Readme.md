@@ -6,7 +6,6 @@ There are several commands to run this python page.
 
 <!-- Create Virtual Environment -->
 
-# cd python_face_group_cluster
 # py -3.8 -m venv .venv
 # .venv\Scripts\activate
 
