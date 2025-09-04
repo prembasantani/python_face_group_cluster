@@ -1,3 +1,8 @@
+# pip install pillow
+# pip install ImageHash
+# pip install face-recognition
+# dlib
+
 import os
 import shutil
 from PIL import Image
@@ -93,15 +98,15 @@ for cluster_id in set(labels):
 
             copied_images.append(src_path)
 
-            # if (idx == 0):
-            #     face_record = encoding_with_image_paths[img_index]
-            #     img_array = face_record['img']
-            #     top, right, bottom, left = face_record['face_location']
-            #     new_face_image = img_array[top:bottom, left:right]
-            #     pil_img = Image.fromarray(new_face_image)
-            #     if pil_img:
-            #         new_name_img = f"face_face_{file_name}_{idx}{ext}"
-            #         pil_img.save(os.path.join(cluster_folder, new_name_img))
+            if (idx == 0):
+                face_record = encoding_with_image_paths[img_index]
+                img_array = face_record['img']
+                top, right, bottom, left = face_record['face_location']
+                new_face_image = img_array[top:bottom, left:right]
+                pil_img = Image.fromarray(new_face_image)
+                if pil_img:
+                    new_name_img = f"face_face_{file_name}_{idx}{ext}"
+                    pil_img.save(os.path.join(cluster_folder, new_name_img))
 
         except Exception as e:
             print(f"Skipping {src_path}: {e}")
