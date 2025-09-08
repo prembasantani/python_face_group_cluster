@@ -6,8 +6,10 @@ import face_recognition
 from sklearn.cluster import DBSCAN
 import numpy as np
 from tqdm import tqdm
-import json
 import sys
+from .src import db
+
+# con = sqlite3.connect("tutorial.db")
 
 # --- CONFIG ---
 INPUT_DIR = "images"    # Folder with all input images
@@ -24,15 +26,12 @@ def get_file(dir_name):
         print(f"Directory with name ['{dir_name}'] does not exist in the root directory.")
         return False
 
-    print("Extracting face embeddings...")
-
     for file in tqdm(os.listdir(dir_name)) :
         path = os.path.join(dir_name, file)
-        if not os.path.isfile(path):
-            get_file (dir_name)
+        if os.path.isdir(path):
+            get_file(path)
             continue
         try:
-            print(f"path: {path}")
             img = face_recognition.load_image_file(path)
             face_locations = face_recognition.face_locations(img) # Get all face boxes
             faces = face_recognition.face_encodings(img, face_locations)
@@ -46,6 +45,7 @@ def get_file(dir_name):
 
     return True
 
+print("Extracting face embeddings...")
 success = get_file(INPUT_DIR)
 
 if (success == False):
@@ -82,8 +82,8 @@ for cluster_id in set(labels):
     copied_images = []
 
     for idx, img_index in enumerate(cluster_indices):
+        src_path = image_paths[img_index]
         try:
-            src_path = image_paths[img_index]
             # if (src_path in copied_images):
             #     continue
 
