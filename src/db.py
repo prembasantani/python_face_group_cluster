@@ -8,7 +8,7 @@ class db_connection:
         pass
 
     def create_connection(self):
-        self.dbc1 = sqlite3.connect("01Python.db")
+        self.dbc1 = sqlite3.connect("01Python.db", isolation_level=None)
         return self.dbc1
 
     def begin_transaction(self):

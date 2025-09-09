@@ -7,13 +7,13 @@ from sklearn.cluster import DBSCAN
 import numpy as np
 from tqdm import tqdm
 import sys
-from .src import db
+from src.db import db_connection
 
 # con = sqlite3.connect("tutorial.db")
 
 # --- CONFIG ---
-INPUT_DIR = "images"    # Folder with all input images
-OUTPUT_DIR = "clusters"       # Folder where clusters will be saved
+INPUT_DIR = "S:/learn/python/01project/python_face_group_cluster/Images"    # Folder with all input images
+OUTPUT_DIR = "S:/learn/python/01project/python_face_group_cluster/clusters"       # Folder where clusters will be saved
 
 # --- STEP 1: Extract face embeddings ---
 embeddings = []
@@ -79,7 +79,7 @@ for cluster_id in set(labels):
 
     # --- Remove duplicates inside cluster using perceptual hash ---
     # hashes = {}
-    copied_images = []
+    # copied_images = []
 
     for idx, img_index in enumerate(cluster_indices):
         src_path = image_paths[img_index]
@@ -96,10 +96,11 @@ for cluster_id in set(labels):
                 # hashes[h] = True
             ext = os.path.splitext(src_path)[1]
             file_name = os.path.splitext(os.path.basename(src_path))[0]
-            new_name = f"{file_name}_{idx}{ext}"
-            shutil.copy(src_path, os.path.join(cluster_folder, new_name))
+            new_name = f"g_{file_name}_{idx}{ext}"
+            os.symlink(src_path, os.path.join(cluster_folder, new_name))
+            # shutil.copy(src_path, os.path.join(cluster_folder, new_name))
 
-            copied_images.append(src_path)
+            # copied_images.append(src_path)
 
             if (idx == 0):
                 face_record = encoding_with_image_paths[img_index]
