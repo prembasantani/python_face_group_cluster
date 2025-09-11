@@ -2,5 +2,6 @@
 
 clusters/
 images/
+images2/
 .venv/
 src/__pycache__

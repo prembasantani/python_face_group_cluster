@@ -12,7 +12,7 @@ from src.db import db_connection
 # con = sqlite3.connect("tutorial.db")
 
 # --- CONFIG ---
-INPUT_DIR = "S:/learn/python/01project/python_face_group_cluster/Images"    # Folder with all input images
+INPUT_DIR = "S:/learn/python/01project/python_face_group_cluster/Images2"    # Folder with all input images
 OUTPUT_DIR = "S:/learn/python/01project/python_face_group_cluster/clusters"       # Folder where clusters will be saved
 
 # --- STEP 1: Extract face embeddings ---
@@ -32,21 +32,26 @@ def get_file(dir_name):
             get_file(path)
             continue
         try:
-            img = face_recognition.load_image_file(path)
-            face_locations = face_recognition.face_locations(img) # Get all face boxes
-            faces = face_recognition.face_encodings(img, face_locations)
-            for i, encoding in enumerate(faces):
-                embeddings.append(encoding)
-                image_paths.append(path)
-                encoding_with_image_paths.append({'path': path, 'img': img, 'face_location': face_locations[i]})
+            image = Image.open(path)
+            image_hash = str(imagehash.phash(image))
+            # img = face_recognition.load_image_file(path)
+            print(f"image_hash : {image_hash}")
+            # face_locations = face_recognition.face_locations(img) # Get all face boxes
+            # faces = face_recognition.face_encodings(img, face_locations)
+            # for i, encoding in enumerate(faces):
+            #     embeddings.append(encoding)
+            #     image_paths.append(path)
+            #     encoding_with_image_paths.append({'path': path, 'img': img, 'face_location': face_locations[i]})
 
         except Exception as e:
             print(f"Skipping {path}: {e}")
 
-    return True
+    return False
 
 print("Extracting face embeddings...")
 success = get_file(INPUT_DIR)
+print(f"success: {success}")
+exit()
 
 if (success == False):
     sys.exit()
